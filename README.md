@@ -69,22 +69,36 @@ cd claude-product-team
 
 # 2. Make the progress script executable
 chmod +x scripts/progress.sh
+```
 
-# 3. Fill in your project context
+**3. Install skill packages** — run these inside Claude Code (not your terminal):
+
+```
+/plugin marketplace add obra/superpowers
+/plugin install superpowers
+
+/plugin marketplace add multica-ai/andrej-karpathy-skills
+/plugin install andrej-karpathy-skills
+
+/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill
+/plugin install ui-ux-pro-max
+
+/plugin marketplace add ChromeDevTools/chrome-devtools-mcp
+/plugin install chrome-devtools-mcp
+```
+
+```bash
+# 4. Fill in your project context
 # Edit _team/CONTEXT.md
 
-# 4. Put your product code here
+# 5. Put your product code here
 # e.g. my-app/
 
-# 5. Open Claude Code and run
+# 6. Run
 # /product-team add a user authentication flow to my-app
 ```
 
-See `docs/setup.md` for both setup options (new project or drop-in to existing).
-
-## Prerequisites
-
-Several Claude Code skill packages are required. See `docs/prerequisites.md`.
+See `docs/setup.md` for both setup options (new project or drop-in to existing). Full skill details in `docs/prerequisites.md`.
 
 ## File structure
 
