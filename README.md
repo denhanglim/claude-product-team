@@ -64,7 +64,7 @@ Opus for roles that produce documents everything else builds from (PRD, architec
 
 ```bash
 # 1. Clone
-git clone https://github.com/<you>/claude-product-team.git
+git clone https://github.com/denhanglim/claude-product-team.git
 cd claude-product-team
 
 # 2. Make the progress script executable
