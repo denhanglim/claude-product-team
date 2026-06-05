@@ -1,5 +1,7 @@
 # Claude Product Team
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 A drop-in multi-agent software team for Claude Code. Write a brief → the team ships it.
 
 ## What it is
@@ -121,6 +123,30 @@ claude-product-team/
 # Two-role discussion without running the full pipeline
 /product-team have product-manager and tech-lead discuss whether notifications should be async
 ```
+
+## Why not just prompt Claude directly?
+
+Prompting Claude works for simple, one-shot tasks. It breaks down when the task has multiple stakeholders, discipline gaps, or failure modes.
+
+**Role discipline.** When one AI handles everything, it writes code without a spec, skips tests when time-pressured, and reviews its own work. Separate roles with explicit "You do NOT" guardrails make the boundaries real.
+
+**Skill enforcement.** Skills are the mechanism that makes discipline stick. `superpowers:test-driven-development` isn't a suggestion — the agent is required to invoke it and report that it did. Missing a required skill triggers re-dispatch. A prompt reminder does not.
+
+**Failure isolation.** If the backend fails, the frontend work is already done in its worktree. A QA bug re-dispatches one engineer, not the whole pipeline. A bare prompt collapses everything into one conversation where any mistake sends you back to the start.
+
+**Structured human control.** Three checkpoints with approve / revise / abort. The PRD is a contract the user signs off on. The pre-ship checkpoint is never skippable. Prompting gives you output; the team gives you a process you can steer.
+
+**Context once.** Fill `_team/CONTEXT.md` once and every agent on every future build gets your domain vocabulary, tech stack, and constraints. No repeated instructions.
+
+---
+
+## Examples
+
+See `docs/examples/` for:
+- `filled-context.md` — a completed CONTEXT.md for a real project
+- `sample-prd.md` — what a Phase 1 PRD looks like
+- `sample-architecture.md` — what a Phase 2 architecture doc looks like
+- `sample-run-report.md` — what a Phase 7 completion report looks like
 
 ## License
 

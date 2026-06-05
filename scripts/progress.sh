@@ -4,6 +4,7 @@
 # Usage:
 #   ./scripts/progress.sh set <stage> "<label>"   update current phase
 #   ./scripts/progress.sh done                    clear progress
+#   ./scripts/progress.sh status                  print current phase
 #
 # Stage numbers:
 #   0  Intake
@@ -21,6 +22,9 @@
 
 STAGE_NAMES=("Intake" "Discovery" "Design+Architecture" "Build" "Integration" "QA" "Security" "Ship")
 STATUS_FILE="${HOME}/.claude/product-team-progress"
+
+# Ensure the directory exists (Claude Code creates ~/.claude/, but guard anyway)
+mkdir -p "$(dirname "$STATUS_FILE")"
 
 case "$1" in
   set)
