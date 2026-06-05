@@ -18,7 +18,7 @@
 
 1. Fork the repo
 2. Create a branch: `git checkout -b my-improvement`
-3. Make changes and test them against a real Claude Code session (run a build, run an audit)
+3. Make changes and test them against a real Claude Code session (run a build — observe each phase's artefact output)
 4. Open a PR with:
    - What you changed and why
    - What you tested (which commands, which phases)

@@ -23,7 +23,10 @@ Copy these three directories into your existing project root:
 cp -r .claude/   /path/to/your-project/.claude/
 cp -r _team/     /path/to/your-project/_team/
 cp -r scripts/   /path/to/your-project/scripts/
+cp -r docs/      /path/to/your-project/docs/
 ```
+
+`docs/` includes `docs/brand/_template.md` and `docs/products/_template.md`, which agents reference when generating brand guidelines and product briefings.
 
 Then open Claude Code from your project root as usual.
 
@@ -45,6 +48,8 @@ This file flows into every agent on every dispatch. A well-filled CONTEXT.md dra
 ```bash
 chmod +x scripts/progress.sh
 ```
+
+(Only needed if you downloaded a zip — `git clone` preserves execute bits.)
 
 Optionally wire the output to your Claude Code status line (see `docs/customization.md`).
 

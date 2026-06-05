@@ -87,6 +87,6 @@ No frontend. No data-engineer (no pipeline). ux-architect sits out (CLI only, no
 No integration phase needed — single engineer owns all three files. head-of-product
 can skip Phase 4 conflict resolution for this feature.
 
-SKILLS_INVOKED: superpowers:writing-plans (file-level breakdown table),
-andrej-karpathy-skills:karpathy-guidelines (surgical change scope — no ORM refactor)
+SKILLS_INVOKED: superpowers:writing-plans (yes — structured file-level breakdown and API contracts),
+superpowers:requesting-code-review (yes — framed review prompt for backend-engineer)
 ```

@@ -14,11 +14,11 @@ status: final
 
 ## Artefacts produced
 
-- Brief: `_team/briefs/YYYY-MM-DD-<slug>.md`
-- PRD: `_team/prds/YYYY-MM-DD-<slug>.md`
-- Design: `_team/designs/YYYY-MM-DD-<slug>.md`
-- Architecture: `_team/architecture/YYYY-MM-DD-<slug>.md`
-- Test plan: `_team/test-plans/YYYY-MM-DD-<slug>.md`
+- Brief: `_team/briefs/YYYY-MM-DD-<product-slug>-<feature-slug>.md`
+- PRD: `_team/prds/YYYY-MM-DD-<product-slug>-<feature-slug>.md`
+- Design: `_team/designs/YYYY-MM-DD-<product-slug>-<feature-slug>.md`
+- Architecture: `_team/architecture/YYYY-MM-DD-<product-slug>-<feature-slug>.md`
+- Test plan: `_team/test-plans/YYYY-MM-DD-<product-slug>-<feature-slug>.md`
 - Security review: `_team/reviews/YYYY-MM-DD-<slug>-security.md`
 
 ## Code changes

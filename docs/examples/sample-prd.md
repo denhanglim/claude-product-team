@@ -36,31 +36,31 @@ partner reviewing household spending).
 
 ## Scope
 
-### In
-
 - `expense export --csv [--out FILE] [--from YYYY-MM] [--to YYYY-MM]`
 - Default output: stdout (pipe-friendly)
 - `--out FILE`: write to file, print confirmation to stderr
 - Date range filters (both optional; default = all time)
 - Column order: date, amount, category, note, archived
 
-### Out of scope
+## Non-scope
 
 - JSON export (separate brief)
 - Import from CSV (separate brief)
-- Cloud upload
+- Cloud upload or sync
 - Formatting options (currency symbol, decimal separator)
 
-## Acceptance criteria
+## User stories
 
-1. Running `expense export --csv` prints a valid CSV to stdout.
-2. The first row is a header: `date,amount,category,note,archived`.
-3. Amounts are decimal (e.g. `12.50`), not integer cents.
-4. Notes containing commas or newlines are correctly quoted per RFC 4180.
-5. `--from 2026-01 --to 2026-03` returns only entries in that range (inclusive).
-6. `--out expenses.csv` writes the file and prints `Exported 42 entries to expenses.csv` to stderr.
-7. An empty ledger exports a header-only CSV without error.
-8. Exit code 0 on success, 1 on any error.
+- As an owner, I can run `expense export --csv` to get my full ledger as CSV so I can open it in Excel.
+- As an owner, I can pipe CSV output to a file so I can automate weekly backups.
+- As an owner, I can filter by `--from` and `--to` so I can share a month's spending with my accountant.
+- As an owner, I can use `--out expenses.csv` so I get a named file without shell redirects.
+- As a consumer of the CSV, I can trust that amounts are decimal and notes are correctly quoted so the data imports cleanly into any tool.
+
+## Risks
+
+- Large ledgers (>100k rows) loaded into memory before streaming → mitigation: use a generator-based approach in `ledger.py`.
+- UTF-8 BOM required for Excel but may surprise Unix tools that treat it as content → mitigation: document in help text.
 
 ## Open questions
 
@@ -69,6 +69,12 @@ partner reviewing household spending).
 2. Should the date column be ISO-8601 (`2026-01-15`) or the display format (`15 Jan 2026`)?
    → ISO-8601 for machine readability.
 
-SKILLS_INVOKED: superpowers:brainstorming (surfaced open questions 1 and 2),
-superpowers:writing-plans (structured the scope table)
+## Strategic briefing diff
+
+Updated `docs/products/expense-tracker.md` to note CSV export as a shipped capability under "Features". No structural changes to the brief.
+
+## SKILLS_INVOKED
+
+- superpowers:brainstorming (yes — surfaced open questions 1 and 2 before writing scope)
+- superpowers:writing-plans (yes — structured scope, non-scope, and user stories)
 ```

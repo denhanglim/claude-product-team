@@ -46,6 +46,7 @@ Stage numbers: `0` Intake · `1` Discovery · `2` Design+Architecture · `3` Bui
 2. Read `_team/CONTEXT.md` if it exists. Extract: business domain, tech stack, available MCP tools, constraints. You will pass these to every downstream dispatch.
 
 3. Read `<product>/CLAUDE.md`. If missing, generate one:
+   - If `<product>/` does not exist, create it first: `mkdir -p <product>/`.
    - Run `find <product>/ -type f | head -60` and read the key files.
    - Write `<product>/CLAUDE.md` (≤ 60 lines) with exactly these five sections:
      1. **What this product does** — 2–3 sentences
@@ -54,14 +55,14 @@ Stage numbers: `0` Intake · `1` Discovery · `2` Design+Architecture · `3` Bui
      4. **Key files** — the 5–8 most important files and what each does
      5. **Constraints** — anything non-obvious a new engineer must know before touching code
 
-4. If product not under git — ask the user once: "`<product name>` isn't under version control yet. The team uses git for safe parallel work and easy rollback. OK to initialise it? [y/n]". If yes, dispatch devops-engineer for the git init only, then continue.
+4. If product not under git — ask the user once: "`<product name>` isn't under version control yet. The team uses git for safe parallel work and easy rollback. OK to initialise it? [y/n]". If yes, dispatch devops-engineer for the git init only, then continue. If no, skip step 5 (no build worktree) and note that engineers in Phase 3 will work directly in `<product>/` without worktree isolation.
 
 5. Create the build worktree (this is the integration target for Phase 4). The `<feature-slug>` comes from the brief filename — lowercase, dash-separated, e.g. `auth-flow`:
    ```bash
    cd <product> && git worktree add ../.claude/worktrees/<product>-build-<feature-slug> -b <product>-build-<feature-slug>
    ```
 
-6. Write the brief artefact to `_team/briefs/YYYY-MM-DD-<slug>.md` using `_team/_templates/brief.md`.
+6. Write the brief artefact to `_team/briefs/YYYY-MM-DD-<product-slug>-<feature-slug>.md` using `_team/_templates/brief.md`.
 
 7. Dispatch product-manager.
 
@@ -76,7 +77,7 @@ Dispatch **product-manager** with:
 - Product `CLAUDE.md` path
 - Relevant context from `_team/CONTEXT.md` (paste domain vocab, constraints, user role)
 - Required skills: `superpowers:brainstorming`, `superpowers:writing-plans`
-- Output target: `_team/prds/YYYY-MM-DD-<slug>.md`
+- Output target: `_team/prds/YYYY-MM-DD-<product-slug>-<feature-slug>.md`
 
 After PM returns, verify `SKILLS_INVOKED`. Re-dispatch on any missing required skill without justification.
 
@@ -96,7 +97,7 @@ Dispatch **ux-architect** and **tech-lead** in a single message (two Agent calls
 - Required skills:
   - ux-architect: `ui-ux-pro-max:ui-ux-pro-max`, `chrome-devtools-mcp:a11y-debugging`, Figma MCP if applicable
   - tech-lead: `superpowers:writing-plans`, `superpowers:requesting-code-review`
-- Outputs: `_team/designs/YYYY-MM-DD-<slug>.md` and `_team/architecture/YYYY-MM-DD-<slug>.md`
+- Outputs: `_team/designs/YYYY-MM-DD-<product-slug>-<feature-slug>.md` and `_team/architecture/YYYY-MM-DD-<product-slug>-<feature-slug>.md`
 
 ⏸️ **CHECKPOINT 2** — surface both artefacts to the user. Three options:
 - **Approve** → proceed to Phase 3
@@ -109,14 +110,13 @@ Dispatch **ux-architect** and **tech-lead** in a single message (two Agent calls
 
 `./scripts/progress.sh set 3 "<run label>"`
 
-Read the architecture's file-level breakdown. Determine which engineers are needed (backend / frontend / data — possibly only one or two). Dispatch only needed engineers in a single message, each in their own worktree:
+Read the architecture's file-level breakdown. Determine which engineers are needed (backend / frontend / data — possibly only one or two). 1. Create a worktree for each needed engineer:
+   ```bash
+   cd <product> && git worktree add ../.claude/worktrees/<product>-<role>-<feature-slug> -b <product>-<role>-<feature-slug>
+   ```
+   (`<feature-slug>` matches the brief filename slug, e.g. `auth-flow`.)
 
-```bash
-cd <product> && git worktree add ../.claude/worktrees/<product>-<role>-<feature-slug> -b <product>-<role>-<feature-slug>
-```
-(`<feature-slug>` matches the brief filename slug, e.g. `auth-flow`.)
-
-Each engineer receives: PRD path + design path + architecture path + their file-level breakdown + context from `_team/CONTEXT.md`.
+2. Dispatch all needed engineers in a single message. Each engineer receives: their worktree path (`.claude/worktrees/<product>-<role>-<feature-slug>`) + PRD path + design path + architecture path + their file-level breakdown + context from `_team/CONTEXT.md`.
 
 Required skills for all engineers: `superpowers:test-driven-development`, `superpowers:systematic-debugging`, `superpowers:verification-before-completion`, `andrej-karpathy-skills:karpathy-guidelines`.
 
@@ -160,9 +160,9 @@ Dispatch **security-compliance** with the full diff and the project's sensitivit
 Dispatch **devops-engineer** to:
 - Run `superpowers:finishing-a-development-branch` on the build worktree
 - Update `<product>/CLAUDE.md` to reflect the new feature
-- Update `docs/products/<slug>.md` if it exists
+- Update `docs/products/<product-slug>.md` if it exists
 
-Write the final report to `_team/reports/YYYY-MM-DD-<slug>.md` using `_team/_templates/report.md`. Surface the one-screen summary in the main thread. Run `./scripts/progress.sh done`.
+Write the final report to `_team/reports/YYYY-MM-DD-<product-slug>-<feature-slug>.md` using `_team/_templates/report.md`. Surface the one-screen summary in the main thread. Run `./scripts/progress.sh done`.
 
 ---
 
@@ -194,7 +194,7 @@ Hard limits: two roles max, three turns max.
 Before declaring the run done:
 - All artefact files exist for this run
 - The product's `CLAUDE.md` is updated
-- The final report is written at `_team/reports/YYYY-MM-DD-<slug>.md`
+- The final report is written at `_team/reports/YYYY-MM-DD-<product-slug>-<feature-slug>.md`
 - A one-screen summary is in the main thread
 
 ## Reporting
@@ -202,7 +202,7 @@ Before declaring the run done:
 ```
 ✓ <Feature> shipped to <Product>.
 Files changed: <n> | New tests: <n> | Re-dispatches: <n>
-Artefacts: _team/reports/YYYY-MM-DD-<slug>.md
+Artefacts: _team/reports/YYYY-MM-DD-<product-slug>-<feature-slug>.md
 Suggested next: <one sentence>.
 ```
 

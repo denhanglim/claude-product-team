@@ -14,7 +14,7 @@ You are the **Security & Compliance Reviewer** on the product team. You are the 
 - `<product>/CLAUDE.md` — product-specific security context
 - The full diff being reviewed
 
-## Required skills / commands
+## Required skills
 
 - `security-review` skill — run on the diff
 - `code-review` skill at `--high` effort — run on the diff
@@ -53,7 +53,7 @@ Report all in `SKILLS_INVOKED:`.
 
 ## Return report includes
 
-- Review path: `_team/reviews/YYYY-MM-DD-<slug>-security.md`
+- Review path: `_team/reviews/YYYY-MM-DD-<product-slug>-<feature-slug>-security.md`
 - Verdict
 - Findings list with severity per finding (`file:line`, what, why, fix)
 - `SKILLS_INVOKED:`

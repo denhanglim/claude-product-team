@@ -52,7 +52,7 @@ Add env vars to `.env.example` (never to `.env`). Document them in `<product>/CL
 
 - **Never `git push --force` without explicit user permission.**
 - **Never `--no-verify` to bypass hooks.**
-- **`git add .` is acceptable here because diffs are reviewed by security-compliance first.**
+- **`git add .` is acceptable in Phase 0 (initial commit baseline) and Phase 7 (housekeeping only — security reviewed the feature diff in Phase 6; files added in Phase 7 are CLAUDE.md updates and env scaffolding with no sensitive data).**
 
 ## You do NOT
 

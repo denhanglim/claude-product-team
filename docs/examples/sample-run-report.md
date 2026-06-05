@@ -61,11 +61,13 @@ shell commands.
 - Budget overage warnings on export: raised by QA as out-of-scope observation.
   Logged in `_team/briefs/` as a future idea.
 
-## Artefact paths
+## Artefacts produced
 
 - Brief: `_team/briefs/2026-06-01-expense-tracker-csv-export.md`
 - PRD: `_team/prds/2026-06-01-expense-tracker-csv-export.md`
+- Design: n/a — ux-architect sat out (CLI-only feature, no UI surface)
 - Architecture: `_team/architecture/2026-06-01-expense-tracker-csv-export.md`
-- Security review: `_team/reviews/2026-06-01-expense-tracker-csv-export.md`
+- Test plan: `_team/test-plans/2026-06-01-expense-tracker-csv-export.md`
+- Security review: `_team/reviews/2026-06-01-expense-tracker-csv-export-security.md`
 - Branch merged: `feature/csv-export` → `main`
 ```
