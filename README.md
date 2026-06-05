@@ -4,7 +4,7 @@ A drop-in multi-agent software team for Claude Code. Write a brief → the team 
 
 ## What it is
 
-Thirteen specialist AI agents that behave like a real product team — each with a defined role, bounded scope, and explicit quality gates. Built on Claude Code's native agent and worktree capabilities.
+Fourteen specialist AI agents across two teams — each with a defined role, bounded scope, and explicit quality gates. Built on Claude Code's native agent and worktree capabilities.
 
 ```
 Brief → PM → UX + Tech Lead (parallel) → Engineers (parallel) → QA → Security → Ship

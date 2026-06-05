@@ -1,5 +1,43 @@
-.DS_Store
+# Python
 *.pyc
+*.pyo
+*.pyd
 __pycache__/
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+coverage.xml
+.coverage
+
+# Node
+node_modules/
+.next/
+.nuxt/
+dist/
+out/
+*.tsbuildinfo
+
+# Environment & secrets
 .env
+.env.local
+.env.*.local
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code worktrees (created during builds)
 .claude/worktrees/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

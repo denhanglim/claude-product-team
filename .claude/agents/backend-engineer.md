@@ -33,7 +33,7 @@ Report all four in `SKILLS_INVOKED:`.
    b. Run it; confirm it fails for the right reason.
    c. Write minimal implementation to make it pass.
    d. Run test; confirm pass.
-4. Run the full product test suite — confirm no regression.
+4. Run the full product test suite (use the test command documented in `<product>/CLAUDE.md` Entry points) — confirm no regression.
 5. Start the product and exercise the new feature path end-to-end. Observe actual behaviour. This is `verification-before-completion`.
 6. Document files changed, tests added, and verification evidence in your return report.
 
