@@ -1,6 +1,6 @@
 # Prerequisites
 
-The product team agents require several Claude Code skill packages. Install these before running `/product-team` or `/engineering-team`.
+The product team agents require several Claude Code skill packages. Install these before running `/product-team`.
 
 ## Required skill packages
 

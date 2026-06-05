@@ -64,10 +64,3 @@ Or with `--auto` to skip the first two approval checkpoints:
 /product-team --auto add a CSV export button to the dashboard
 ```
 
-## Step 5 — Run your first audit
-
-```
-/engineering-team audit my-app
-```
-
-The engineering lead will map the codebase, announce the crew, run the sweep, and return a prioritised findings report.

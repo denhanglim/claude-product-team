@@ -29,7 +29,6 @@ _team/
 ├── test-plans/         qa-engineer writes here at Phase 5
 ├── reviews/            security-compliance writes here at Phase 6
 ├── reports/            head-of-product writes here at Phase 7
-├── audits/             engineering-lead writes here (engineering team sweeps)
 └── _templates/         starting points for every artefact type
 ```
 

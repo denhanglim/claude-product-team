@@ -29,11 +29,7 @@
 The only real test is running the pipeline:
 
 ```bash
-# Test a product team change
 /product-team --auto build a simple hello-world CLI app
-
-# Test an engineering team change
-/engineering-team audit <any small codebase>
 ```
 
 Check that:
