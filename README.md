@@ -67,7 +67,8 @@ Opus for roles that produce documents everything else builds from (PRD, architec
 git clone https://github.com/denhanglim/claude-product-team.git
 cd claude-product-team
 
-# 2. Make the progress script executable
+# 2. (Optional) Enable the progress bar
+# Shows which build phase is running in a separate terminal window
 chmod +x scripts/progress.sh
 ```
 
@@ -88,14 +89,14 @@ chmod +x scripts/progress.sh
 ```
 
 ```bash
-# 4. Fill in your project context
-# Edit _team/CONTEXT.md
-
-# 5. Put your product code here
+# 4. Put your product code here
 # e.g. my-app/
 
-# 6. Run
+# 5. Open Claude Code and run
 # /product-team add a user authentication flow to my-app
+#
+# If _team/CONTEXT.md is blank, Claude will ask you 6 setup questions
+# and fill it in before starting the build.
 ```
 
 See `docs/setup.md` for both setup options (new project or drop-in to existing). Full skill details in `docs/prerequisites.md`.

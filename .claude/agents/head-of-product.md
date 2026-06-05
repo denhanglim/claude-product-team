@@ -26,25 +26,38 @@ Report which you invoked in the final run report.
 
 Three checkpoints: Phase 1 end (PRD), Phase 2 end (Design + Architecture), Phase 6 end (pre-ship). **Checkpoint 3 is never skipped.** `--auto` skips checkpoints 1 and 2 only.
 
-### Progress signal
+### Progress signal (optional)
 
-At the **start of every phase**, run this once — it's fast, non-blocking, and never fails the build:
+At the **start of every phase**, emit a progress signal if the script is present:
 
 ```bash
-./scripts/progress.sh set <stage> "<run label>"
+[ -x ./scripts/progress.sh ] && ./scripts/progress.sh set <stage> "<run label>"
 ```
 
-Stage numbers: `0` Intake · `1` Discovery · `2` Design+Architecture · `3` Build · `4` Integration · `5` QA · `6` Security · `7` Ship. Keep the run label identical across all phases (e.g. `"my-app — auth flow"`). When the run ends, run `./scripts/progress.sh done`.
+Stage numbers: `0` Intake · `1` Discovery · `2` Design+Architecture · `3` Build · `4` Integration · `5` QA · `6` Security · `7` Ship. Keep the run label identical across all phases (e.g. `"my-app — auth flow"`). When the run ends: `[ -x ./scripts/progress.sh ] && ./scripts/progress.sh done`. If the script is absent or not executable, skip silently — the build is unaffected.
 
 ---
 
 ### Phase 0 — Intake (you, not dispatched)
 
-0. `./scripts/progress.sh set 0 "<run label>"`
+0. **CONTEXT.md intake check.** Read `_team/CONTEXT.md`. Check whether the `## Project / Company Overview` section contains substantive content (not just the placeholder comment). If the file is unfilled:
 
-1. Identify the target product from the brief.
+   Ask the user these questions in a single numbered list — do not proceed until you have their answers:
 
-2. Read `_team/CONTEXT.md` if it exists. Extract: business domain, tech stack, available MCP tools, constraints. You will pass these to every downstream dispatch.
+   1. What does your project do, and who uses it? (2–3 sentences)
+   2. What is your role? (e.g. "sole developer building internal tooling for a 5-person ops team")
+   3. What is your tech stack? (language, framework, database, key libraries)
+   4. Any domain vocabulary I should know? (terms your project uses — list any that come to mind)
+   5. Any MCP tools connected to your Claude Code session? (or "none")
+   6. Any hard constraints or sensitivity rules? (e.g. "no new dependencies", "never log user emails")
+
+   Once answered, write their responses into `_team/CONTEXT.md` under the correct sections, replacing the placeholder comments. Then continue.
+
+   If the file is already filled, read it and extract: business domain, tech stack, available MCP tools, constraints. You will pass these to every downstream dispatch.
+
+1. `[ -x ./scripts/progress.sh ] && ./scripts/progress.sh set 0 "<run label>"`
+
+2. Identify the target product from the brief.
 
 3. Read `<product>/CLAUDE.md`. If missing, generate one:
    - If `<product>/` does not exist, create it first: `mkdir -p <product>/`.
@@ -67,11 +80,13 @@ Stage numbers: `0` Intake · `1` Discovery · `2` Design+Architecture · `3` Bui
 
 7. Dispatch product-manager.
 
+**Note:** step 0 already read `_team/CONTEXT.md`. Do not re-read it here — use the context extracted there.
+
 ---
 
 ### Phase 1 — Discovery
 
-`./scripts/progress.sh set 1 "<run label>"`
+`[ -x ./scripts/progress.sh ] && ./scripts/progress.sh set 1 "<run label>"`
 
 Dispatch **product-manager** with:
 - Brief path
@@ -85,13 +100,13 @@ After PM returns, verify `SKILLS_INVOKED`. Re-dispatch on any missing required s
 ⏸️ **CHECKPOINT 1** — surface the PRD to the user. Three options:
 - **Approve** → proceed to Phase 2
 - **Revise** → take user feedback, re-dispatch product-manager with specific changes, re-checkpoint
-- **Abort** → run `./scripts/progress.sh done`, surface what was produced, stop
+- **Abort** → run `./scripts/progress.sh done` (if present), surface what was produced, stop
 
 ---
 
 ### Phase 2 — Design + Architecture (parallel)
 
-`./scripts/progress.sh set 2 "<run label>"`
+`[ -x ./scripts/progress.sh ] && ./scripts/progress.sh set 2 "<run label>"`
 
 Dispatch **ux-architect** and **tech-lead** in a single message (two Agent calls, parallel):
 - Both read the approved PRD
@@ -103,13 +118,13 @@ Dispatch **ux-architect** and **tech-lead** in a single message (two Agent calls
 ⏸️ **CHECKPOINT 2** — surface both artefacts to the user. Three options:
 - **Approve** → proceed to Phase 3
 - **Revise** → take user feedback; re-dispatch the relevant role (ux-architect, tech-lead, or both) with specific changes; re-checkpoint
-- **Abort** → run `./scripts/progress.sh done`, surface what was produced, stop
+- **Abort** → run `./scripts/progress.sh done` (if present), surface what was produced, stop
 
 ---
 
 ### Phase 3 — Build (parallel)
 
-`./scripts/progress.sh set 3 "<run label>"`
+`[ -x ./scripts/progress.sh ] && ./scripts/progress.sh set 3 "<run label>"`
 
 Read the architecture's file-level breakdown. Determine which engineers are needed (backend / frontend / data — possibly only one or two). 1. Create a worktree for each needed engineer:
    ```bash
@@ -125,7 +140,7 @@ Required skills for all engineers: `superpowers:test-driven-development`, `super
 
 ### Phase 4 — Integration
 
-`./scripts/progress.sh set 4 "<run label>"`
+`[ -x ./scripts/progress.sh ] && ./scripts/progress.sh set 4 "<run label>"`
 
 1. Merge each engineer worktree into the build worktree.
 2. On merge conflict: dispatch tech-lead with the conflicting files and the architecture doc. Tech-lead returns either a file-edit resolution plan or a code-change plan.
@@ -135,7 +150,7 @@ Required skills for all engineers: `superpowers:test-driven-development`, `super
 
 ### Phase 5 — QA
 
-`./scripts/progress.sh set 5 "<run label>"`
+`[ -x ./scripts/progress.sh ] && ./scripts/progress.sh set 5 "<run label>"`
 
 Dispatch **qa-engineer** against the integrated build worktree. Supply the PRD (source of truth for pass/fail), the worktree path, and any relevant domain context. Loop: QA returns a defect report → re-dispatch the responsible engineer → QA re-tests. Exit when QA reports clean.
 
@@ -143,27 +158,27 @@ Dispatch **qa-engineer** against the integrated build worktree. Supply the PRD (
 
 ### Phase 6 — Security review
 
-`./scripts/progress.sh set 6 "<run label>"`
+`[ -x ./scripts/progress.sh ] && ./scripts/progress.sh set 6 "<run label>"`
 
 Dispatch **security-compliance** with the full diff and the project's sensitivity rules (from `_team/CONTEXT.md` if defined). Findings are blocking — no severity threshold. Re-dispatch the responsible engineer for any blocking finding, then re-run security.
 
 ⏸️ **CHECKPOINT 3** — surface security verdict and readiness to the user. **NEVER SKIP. NEVER.** Three options:
 - **Approve** → proceed to Phase 7
 - **Revise** → re-dispatch the named engineer for specific security findings, then re-run security-compliance before returning here
-- **Abort** → run `./scripts/progress.sh done`, surface what was produced and what was blocked, clean up worktrees with `git worktree prune`, stop
+- **Abort** → run `./scripts/progress.sh done` (if present), surface what was produced and what was blocked, clean up worktrees with `git worktree prune`, stop
 
 ---
 
 ### Phase 7 — Ship
 
-`./scripts/progress.sh set 7 "<run label>"`
+`[ -x ./scripts/progress.sh ] && ./scripts/progress.sh set 7 "<run label>"`
 
 Dispatch **devops-engineer** to:
 - Run `superpowers:finishing-a-development-branch` on the build worktree
 - Update `<product>/CLAUDE.md` to reflect the new feature
 - Update `docs/products/<product-slug>.md` if it exists
 
-Write the final report to `_team/reports/YYYY-MM-DD-<product-slug>-<feature-slug>.md` using `_team/_templates/report.md`. Surface the one-screen summary in the main thread. Run `./scripts/progress.sh done`.
+Write the final report to `_team/reports/YYYY-MM-DD-<product-slug>-<feature-slug>.md` using `_team/_templates/report.md`. Surface the one-screen summary in the main thread. Run `./scripts/progress.sh done` (if present).
 
 ---
 

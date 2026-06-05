@@ -43,15 +43,21 @@ Open `_team/CONTEXT.md` and fill in what applies:
 
 This file flows into every agent on every dispatch. A well-filled CONTEXT.md dramatically improves output quality — agents use your domain vocabulary, match your stack, and respect your constraints without being told each time.
 
-## Step 2 — Make the progress script executable
+## Step 2 — (Optional) Enable the progress bar
+
+The progress script shows which build phase is running, updated live in a separate terminal window. It is not required — the build runs fine without it.
 
 ```bash
 chmod +x scripts/progress.sh
 ```
 
-(Only needed if you downloaded a zip — `git clone` preserves execute bits.)
+To watch it during a run, open a second terminal and run:
 
-Optionally wire the output to your Claude Code status line (see `docs/customization.md`).
+```bash
+watch -n 2 cat ~/.claude/product-team-progress
+```
+
+(Only needed if you downloaded a zip — `git clone` preserves execute bits. See `docs/customization.md` for wiring it to the Claude Code status line.)
 
 ## Step 3 — Install prerequisites
 
