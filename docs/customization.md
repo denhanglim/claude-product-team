@@ -1,5 +1,17 @@
 # Customisation
 
+## Recommended session settings
+
+### Extended thinking (effort level)
+
+Enable extended thinking (max effort) in Claude Code before starting a build. In the desktop app, open Settings → Model; in the CLI, use `/config`.
+
+Why it matters: the four Opus agents — head-of-product, product-manager, tech-lead, security-compliance — produce the documents everything else builds from. Extended thinking lets them reason through edge cases in scope, catch architectural conflicts before code is written, and surface non-obvious security issues. The six Sonnet agents (engineers, QA, devops) execute against those documents; thinking budget is less critical there.
+
+**Effort is a session-level setting.** There is no per-agent thinking budget in Claude Code agent definitions. Set it once before typing `/product-team` — it applies to the full run. You can change it with `/config` mid-session, but the expensive reasoning phases (1, 2, 6) run before the build phases (3, 5, 7), so reducing effort midway gains little.
+
+---
+
 ## The only file you should regularly edit
 
 **`_team/CONTEXT.md`** — keep it current as your project evolves. If you add a new integration, add it to MCP Tools. If you standardise on a new pattern, add it to Constraints. If you introduce new domain terms, add them to the vocabulary table.

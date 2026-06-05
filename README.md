@@ -33,18 +33,20 @@ Triggered by `/product-team <brief>`. Runs 8 phases:
 
 ## The roster
 
-| Role | Responsibility |
-|------|---------------|
-| **head-of-product** | Orchestrator — reads brief, dispatches roles, owns checkpoints |
-| **product-manager** | Clarifying questions → PRD |
-| **ux-architect** | IA, flows, wireframes, interaction states, a11y |
-| **tech-lead** | System design, API contracts, data models, conflict resolution |
-| **backend-engineer** | Server code, APIs, database access |
-| **frontend-engineer** | UI implementation — verifies in real browser |
-| **data-engineer** | Pipelines, ETL, scoring, data quality |
-| **qa-engineer** | Test plans, edge cases, manual verification in real app |
-| **security-compliance** | Secrets, PII, data handling — final pre-ship gate |
-| **devops-engineer** | Git hygiene, CLAUDE.md updates, env config |
+| Role | Model | Responsibility |
+|------|-------|---------------|
+| **head-of-product** | Opus 4.8 | Orchestrator — reads brief, dispatches roles, owns checkpoints |
+| **product-manager** | Opus 4.8 | Clarifying questions → PRD |
+| **ux-architect** | Sonnet 4.6 | IA, flows, wireframes, interaction states, a11y |
+| **tech-lead** | Opus 4.8 | System design, API contracts, data models, conflict resolution |
+| **backend-engineer** | Sonnet 4.6 | Server code, APIs, database access |
+| **frontend-engineer** | Sonnet 4.6 | UI implementation — verifies in real browser |
+| **data-engineer** | Sonnet 4.6 | Pipelines, ETL, scoring, data quality |
+| **qa-engineer** | Sonnet 4.6 | Test plans, edge cases, manual verification in real app |
+| **security-compliance** | Opus 4.8 | Secrets, PII, data handling — final pre-ship gate |
+| **devops-engineer** | Sonnet 4.6 | Git hygiene, CLAUDE.md updates, env config |
+
+Opus for roles that produce documents everything else builds from (PRD, architecture, security verdict). Sonnet for roles that execute against those documents. Override any agent's model by editing the `model:` field in its `.claude/agents/` file.
 
 ## What makes this different
 
